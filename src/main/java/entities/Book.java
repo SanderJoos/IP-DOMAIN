@@ -1,7 +1,7 @@
 package entities;
 
 /**
- * @Author Sander Joos
+ * @author Sander Joos
  */
 public class Book {
 
@@ -68,6 +68,9 @@ public class Book {
         if(author == null){
             throw new IllegalArgumentException("This isn't a valid author");
         }
-        this.author = author;
+        if(this.author == null) {
+            this.author = author;
+            author.addBook(this);
+        }
     }
 }

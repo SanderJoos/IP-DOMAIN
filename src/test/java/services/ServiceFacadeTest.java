@@ -4,8 +4,6 @@ import entities.Author;
 import entities.Book;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.lang.invoke.SerializedLambda;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -22,6 +20,7 @@ public class ServiceFacadeTest {
 
     public static Author author1;
     public static Author author2;
+
     @Before
     public void setUp(){
         this.service = new ServiceFacade();

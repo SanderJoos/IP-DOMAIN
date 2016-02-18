@@ -1,12 +1,12 @@
 package db.actorDB;
 
 /**
- * @Author Sander Joos
+ * @author Sander Joos
  */
 public class AuthorRepositoryFactory {
 
     public IAuthorRepository getActorRepository(String actorRepositoryKind){
-        if(actorRepositoryKind.equals("AuthorRepositoryPostgresql")){
+        if(actorRepositoryKind.equals(AuthorRepositoryType.POSTGRESQL.getSimpleName())){
             return new AuthorRepositoryPostgresql();
         }
         else{

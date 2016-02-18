@@ -51,8 +51,10 @@ public class Author {
     }
 
     public void addBook(Book book){
-        this.books.add(book);
-        book.setAuthor(this);
+        if(! this.books.contains(book)) {
+            this.books.add(book);
+            book.setAuthor(this);
+        }
     }
 
     public double getAverageScore() {

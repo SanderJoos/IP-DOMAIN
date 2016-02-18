@@ -27,6 +27,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="IP-Domain" target="1.5" />
+      <module name="IP-Web" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

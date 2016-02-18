@@ -1,12 +1,14 @@
 package db.bookDB;
 
 /**
- * Created by Sander_2 on 12/02/2016.
+ * @author Sander Joos
+ *
+ * simple factory for 2 different kinds of repositories, not closed
  */
 public class BookRepositoryFactory {
 
     public IBookRepository getBookRepository(String bookRepositoryKind){
-        if(bookRepositoryKind.equals("BookRepositoryPostgresql")){
+        if(bookRepositoryKind.equals(BookRepositoryType.POSTGRESQL.getSimpleName())){
             return new BookRepositoryPostgresql();
         }
         else{

@@ -1,5 +1,7 @@
 package entities;
 
+import Exceptions.DomainException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class Author {
 
     public void setName(String name) {
         if(name.isEmpty()){
-            throw new IllegalArgumentException("This isn't a valid name");
+            throw new DomainException("This isn't a valid name");
         }
         this.name = name;
     }
@@ -41,7 +43,7 @@ public class Author {
 
     public void setLastName(String lastName) {
         if(lastName.isEmpty()){
-            throw new IllegalArgumentException("This isn't a valid lastName");
+            throw new DomainException("This isn't a valid lastName");
         }
         this.lastName = lastName;
     }
@@ -67,7 +69,7 @@ public class Author {
 
     public void removeBook(Book book){
         if(book == null){
-            throw new IllegalArgumentException("This isn't a valid book to remove");
+            throw new DomainException("This isn't a valid book to remove");
         }
         this.books.remove(book);
     }

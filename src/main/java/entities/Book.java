@@ -1,5 +1,7 @@
 package entities;
 
+import Exceptions.DomainException;
+
 /**
  * @author Sander Joos
  */
@@ -33,7 +35,7 @@ public class Book {
 
     public void setTitle(String title) {
         if(title.isEmpty()){
-            throw new IllegalArgumentException("This isn't a valid title");
+            throw new DomainException("This isn't a valid title");
         }
         this.title = title;
     }
@@ -44,7 +46,7 @@ public class Book {
 
     public void setISBN(String ISBN) {
         if(ISBN.isEmpty()){
-            throw new IllegalArgumentException("This isn't a valid ISBN");
+            throw new DomainException("This isn't a valid ISBN");
         }
         this.ISBN = ISBN;
     }
@@ -55,7 +57,7 @@ public class Book {
 
     public void setScore(int score) {
         if(score < 0 || score > 10){
-            throw new IllegalArgumentException("This isn't a valid score");
+            throw new DomainException("This isn't a valid score");
         }
         this.score = score;
     }
@@ -66,7 +68,7 @@ public class Book {
 
     public void setAuthor(Author author) {
         if(author == null){
-            throw new IllegalArgumentException("This isn't a valid author");
+            throw new DomainException("This isn't a valid author");
         }
         if(this.author == null) {
             this.author = author;

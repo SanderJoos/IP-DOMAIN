@@ -14,9 +14,7 @@ public class AuthorRepositoryHashMap implements IAuthorRepository {
 
     private HashMap<String, Author> authors;
 
-    public AuthorRepositoryHashMap(){
-        this.authors = new HashMap<String, Author>();
-    }
+    public AuthorRepositoryHashMap(){ this.authors = new HashMap<String, Author>(); }
 
     public List<Author> getAllAuthors() {
         return new ArrayList<Author>(this.authors.values());

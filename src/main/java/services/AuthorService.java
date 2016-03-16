@@ -16,8 +16,8 @@ public class AuthorService{
 
     private IAuthorRepository actorRepository;
 
-    public AuthorService(){
-        this.actorRepository = new AuthorRepositoryFactory().getActorRepository("hashMap");
+    public AuthorService(String repositoryKind){
+        this.actorRepository = new AuthorRepositoryFactory().getActorRepository(repositoryKind);
     }
 
     public IAuthorRepository getActorRepository() {

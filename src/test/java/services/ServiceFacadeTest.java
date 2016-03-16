@@ -23,7 +23,7 @@ public class ServiceFacadeTest {
 
     @Before
     public void setUp(){
-        this.service = new ServiceFacade();
+        this.service = new ServiceFacade("hashMap");
         author1 = new Author("Patrick","Rothfuss");
         author2 = new Author("Brandon","Sanderson");
         book1 = new Book("De naam van de wind","1",10);

@@ -15,9 +15,9 @@ public class ServiceFacade{
     AuthorService authorService;
     BookService bookService;
 
-    public ServiceFacade(){
-        this.authorService = new AuthorService();
-        this.bookService = new BookService();
+    public ServiceFacade(String repositoryKind){
+        this.authorService = new AuthorService(repositoryKind);
+        this.bookService = new BookService(repositoryKind);
     }
 
     public List<Author> getAllAuthors() {

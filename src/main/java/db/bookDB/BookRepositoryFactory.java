@@ -15,8 +15,4 @@ public class BookRepositoryFactory {
             return new BookRepositoryHashMap();
         }
     }
-
-    public IBookRepository getBookRepository(){
-        return new BookRepositoryHashMap();
-    }
 }

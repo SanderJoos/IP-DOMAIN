@@ -12,19 +12,21 @@ import java.util.List;
  */
 public class AuthorService{
 
+    //TODO replace all actors in authors
+
     private IAuthorRepository actorRepository;
 
     public AuthorService(){
-        this.actorRepository = new AuthorRepositoryFactory().getActorRepository();
+        this.actorRepository = new AuthorRepositoryFactory().getActorRepository("hashMap");
     }
 
     public IAuthorRepository getActorRepository() {
         return actorRepository;
     }
 
-    public void setActorRepository(String ActorRepositoryKind) {
+    public void setActorRepository(String authorRepositoryKind) {
         //TODO
-        this.actorRepository = new AuthorRepositoryFactory().getActorRepository();
+        this.actorRepository = new AuthorRepositoryFactory().getActorRepository(authorRepositoryKind);
     }
 
 

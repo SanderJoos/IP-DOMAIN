@@ -6,13 +6,14 @@ import entities.Book;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * @author Sander Joos
  */
 public class AuthorRepositoryHashMap implements IAuthorRepository {
 
-    private HashMap<String, Author> authors;
+    private static Map<String, Author> authors;
 
     public AuthorRepositoryHashMap(){ this.authors = new HashMap<String, Author>(); }
 

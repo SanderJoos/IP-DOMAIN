@@ -13,8 +13,8 @@ import java.util.Map;
  */
 public class BookRepositoryHashMap implements IBookRepository {
 
-    private Map<String, Book> bookByTitle = new HashMap<String, Book>();
-    private Map<String, Book> bookByISBN = new HashMap<String, Book>();
+    private static Map<String, Book> bookByTitle = new HashMap<String, Book>();
+    private static Map<String, Book> bookByISBN = new HashMap<String, Book>();
 
     public List<Book> getAllBooks() {
         return new ArrayList<Book>(this.bookByTitle.values());

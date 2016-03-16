@@ -15,7 +15,7 @@ public class BookService{
     IBookRepository repository;
 
     public BookService(){
-        this.repository = new BookRepositoryFactory().getBookRepository();
+        this.repository = new BookRepositoryFactory().getBookRepository("hashMap");
     }
 
     public IBookRepository getRepository() {
@@ -24,7 +24,7 @@ public class BookService{
 
     public void setRepository(String bookRepositoryKind) {
         //TODO
-        this.repository = new BookRepositoryFactory().getBookRepository();
+        this.repository = new BookRepositoryFactory().getBookRepository(bookRepositoryKind);
     }
 
     public List<Book> getAllBooks() {

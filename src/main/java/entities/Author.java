@@ -67,11 +67,4 @@ public class Author {
         return score/(this.getBooks().size());
     }
 
-    public void removeBook(Book book){
-        if(book == null){
-            throw new DomainException("This isn't a valid book to remove");
-        }
-        this.books.remove(book);
-    }
-
 }

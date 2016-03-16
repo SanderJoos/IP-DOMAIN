@@ -5,6 +5,8 @@ package db.actorDB;
  */
 public class AuthorRepositoryFactory {
 
+    //TODO replace actors
+
     public IAuthorRepository getActorRepository(String actorRepositoryKind){
         if(actorRepositoryKind.equals(AuthorRepositoryType.POSTGRESQL.getSimpleName())){
             return new AuthorRepositoryPostgresql();
@@ -12,9 +14,5 @@ public class AuthorRepositoryFactory {
         else{
             return new AuthorRepositoryHashMap();
         }
-    }
-
-    public IAuthorRepository getActorRepository(){
-        return new AuthorRepositoryHashMap();
     }
 }

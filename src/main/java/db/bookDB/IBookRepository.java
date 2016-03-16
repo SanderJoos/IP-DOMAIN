@@ -13,10 +13,12 @@ public interface IBookRepository {
     List<Book> getAllBooks();
     Book getBook(String title);
     Book getBookByISBN(String ISBN);
-    Author getAuthorByTitle(String title);
-    Author getAuthorByISBN(String ISBN);
+//    Author getAuthorByTitle(String title);
+//    Author getAuthorByISBN(String ISBN);
     void addBook(Book book);
     void deleteBook(String title);
     void deleteBookByISBN(String ISBN);
     void deleteBook(Book book);
+
+    void updateBook(Book book);
 }

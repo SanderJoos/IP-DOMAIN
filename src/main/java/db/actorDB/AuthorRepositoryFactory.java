@@ -7,7 +7,7 @@ public class AuthorRepositoryFactory {
 
     //TODO replace actors
 
-    public IAuthorRepository getActorRepository(String actorRepositoryKind){
+    public IAuthorRepository getAuthorRepository(String actorRepositoryKind){
         if(actorRepositoryKind.equals(AuthorRepositoryType.POSTGRESQL.getSimpleName())){
             return new AuthorRepositoryPostgresql();
         }

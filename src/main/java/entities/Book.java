@@ -10,7 +10,6 @@ public class Book {
     String title;
     String ISBN;
     int score;
-    Author author;
 
     public Book(){
 
@@ -26,7 +25,6 @@ public class Book {
         this.setISBN(ISBN);
         this.setScore(score);
         this.setTitle(title);
-        this.setAuthor(author);
     }
 
     public String getTitle() {
@@ -60,19 +58,5 @@ public class Book {
             throw new DomainException("This isn't a valid score");
         }
         this.score = score;
-    }
-
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        if(author == null){
-            throw new DomainException("This isn't a valid author");
-        }
-        if(this.author == null) {
-            this.author = author;
-            author.addBook(this);
-        }
     }
 }

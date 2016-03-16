@@ -39,13 +39,13 @@ public class BookService{
         return this.getRepository().getBookByISBN(ISBN);
     }
 
-    public Author getAuthor(String title) {
-       return this.getRepository().getAuthorByTitle(title);
-    }
-
-    public Author getAuthorByISBN(String ISBN) {
-        return this.getRepository().getAuthorByISBN(ISBN);
-    }
+//    public Author getAuthor(String title) {
+//       return this.getRepository().getAuthorByTitle(title);
+//    }
+//
+//    public Author getAuthorByISBN(String ISBN) {
+//        return this.getRepository().getAuthorByISBN(ISBN);
+//    }
 
     public void addBook(Book book) {
         this.getRepository().addBook(book);
@@ -62,4 +62,9 @@ public class BookService{
     public void deleteBook(Book book) {
         this.getRepository().deleteBook(book);
     }
+
+    public void updateBook(Book book){
+        this.getRepository().updateBook(book);
+    }
+
 }

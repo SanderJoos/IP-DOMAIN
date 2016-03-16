@@ -97,17 +97,17 @@ public class ServiceFacadeTest {
         assertEquals(book1,service.getBookByISBN(book1.getISBN()));
     }
 
-    @Test
-    public void testGetAuthor_by_title(){
-        service.addBookToAuthor(author1,book1);
-        assertEquals(author1, service.getAuthorByTitle(book1.getTitle()));
-    }
-
-    @Test
-    public void testGetAuthorByISBN(){
-        service.addBookToAuthor(author1,book1);
-        assertEquals(author1, service.getAuthorByISBN(book1.getISBN()));
-    }
+//    @Test
+//    public void testGetAuthor_by_title(){
+//        service.addBookToAuthor(author1,book1);
+//        assertEquals(author1, service.getAuthorByTitle(book1.getTitle()));
+//    }
+//
+//    @Test
+//    public void testGetAuthorByISBN(){
+//        service.addBookToAuthor(author1,book1);
+//        assertEquals(author1, service.getAuthorByISBN(book1.getISBN()));
+//    }
 
     @Test
     public void testAddBook(){

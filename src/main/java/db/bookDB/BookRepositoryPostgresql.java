@@ -26,13 +26,13 @@ public class BookRepositoryPostgresql implements IBookRepository {
         return null;
     }
 
-    public Author getAuthorByTitle(String title) {
-        return null;
-    }
-
-    public Author getAuthorByISBN(String ISBN) {
-        return null;
-    }
+//    public Author getAuthorByTitle(String title) {
+//        return null;
+//    }
+//
+//    public Author getAuthorByISBN(String ISBN) {
+//        return null;
+//    }
 
     public void addBook(Book book) {
 
@@ -47,6 +47,10 @@ public class BookRepositoryPostgresql implements IBookRepository {
     }
 
     public void deleteBook(Book book) {
+
+    }
+
+    public void updateBook(Book book) {
 
     }
 }

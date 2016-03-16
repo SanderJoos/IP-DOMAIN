@@ -46,4 +46,16 @@ public class AuthorRepositoryPostgresql implements IAuthorRepository {
     public Author getAuthor(String name, String lastName) {
         return null;
     }
+
+    public void updateAuthor(Author author) {
+
+    }
+
+    public Author getAuthorById(long id) {
+        return null;
+    }
+
+    public void deleteAuthor(long id) {
+
+    }
 }

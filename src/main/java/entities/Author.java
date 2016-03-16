@@ -16,6 +16,8 @@ public class Author {
 
     private List<Book> books;
 
+    private static long id = 0;
+
     public Author(){
         this.books = new ArrayList<Book>();
     }
@@ -24,6 +26,20 @@ public class Author {
         this.setName(name);
         this.setLastName(lastName);
         this.books = new ArrayList<Book>();
+        this.setId(Author.getNextId());
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public static long getNextId(){
+        Author.id++;
+        return Author.id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -55,7 +71,6 @@ public class Author {
     public void addBook(Book book){
         if(! this.books.contains(book)) {
             this.books.add(book);
-            book.setAuthor(this);
         }
     }
 

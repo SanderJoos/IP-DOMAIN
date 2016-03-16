@@ -19,4 +19,8 @@ public interface IAuthorRepository {
     void deleteAuthor(Author author);
     void deleteAuthor(String lastName);
 
+    void updateAuthor(Author author);
+    Author getAuthorById(long id);
+    void deleteAuthor(long id);
+
 }

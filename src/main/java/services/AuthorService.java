@@ -12,54 +12,64 @@ import java.util.List;
  */
 public class AuthorService{
 
-    //TODO replace all actors in authors
-
-    private IAuthorRepository actorRepository;
+    private IAuthorRepository authorRepository;
 
     public AuthorService(String repositoryKind){
-        this.actorRepository = new AuthorRepositoryFactory().getActorRepository(repositoryKind);
+        this.authorRepository = new AuthorRepositoryFactory().getAuthorRepository(repositoryKind);
     }
 
-    public IAuthorRepository getActorRepository() {
-        return actorRepository;
+    public IAuthorRepository getAuthorRepository() {
+        return authorRepository;
     }
 
     public void setActorRepository(String authorRepositoryKind) {
         //TODO
-        this.actorRepository = new AuthorRepositoryFactory().getActorRepository(authorRepositoryKind);
+        this.authorRepository = new AuthorRepositoryFactory().getAuthorRepository(authorRepositoryKind);
     }
 
 
     public List<Author> getAllAuthors() {
-        return this.getActorRepository().getAllAuthors();
+        return this.getAuthorRepository().getAllAuthors();
     }
 
     public Author getAuthor(String name, String lastName) {
-        return this.getActorRepository().getAuthor(name, lastName);
+        return this.getAuthorRepository().getAuthor(name, lastName);
     }
 
     public Author getAuthor(String lastName) {
-        return this.getActorRepository().getAuthor(lastName);
+        return this.getAuthorRepository().getAuthor(lastName);
     }
 
     public List<Book> getBooksFromAuthor(String name, String lastName) {
-        return this.getActorRepository().getBooksFromAuthor(name, lastName);
+        return this.getAuthorRepository().getBooksFromAuthor(name, lastName);
     }
 
     public List<Book> getBooksFromAuthor(String lastName) {
-        return this.getActorRepository().getBooksFromAuthor(lastName);
+        return this.getAuthorRepository().getBooksFromAuthor(lastName);
     }
 
     public void addAuthor(Author author) {
-        this.getActorRepository().addAuthor(author);
+        this.getAuthorRepository().addAuthor(author);
     }
 
     public void deleteAuthor(Author author) {
-        this.getActorRepository().deleteAuthor(author);
+        this.getAuthorRepository().deleteAuthor(author);
     }
 
     public void deleteAuthor(String lastName) {
-        this.getActorRepository().deleteAuthor(lastName);
+        this.getAuthorRepository().deleteAuthor(lastName);
+    }
+
+    public void updateAuthor(Author author){
+        this.getAuthorRepository().updateAuthor(author);
+    }
+
+    public Author getAuthorById(long id){
+        return this.getAuthorRepository().getAuthorById(id);
+    }
+
+    public void deleteAuthor(long id){
+        this.authorRepository.deleteAuthor(id);
     }
 
 }

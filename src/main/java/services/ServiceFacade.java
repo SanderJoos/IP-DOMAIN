@@ -64,13 +64,13 @@ public class ServiceFacade{
         return this.bookService.getBookByISBN(ISBN);
     }
 
-    public Author getAuthorByTitle(String title) {
-        return this.bookService.getAuthor(title);
-    }
-
-    public Author getAuthorByISBN(String ISBN) {
-        return this.bookService.getAuthorByISBN(ISBN);
-    }
+//    public Author getAuthorByTitle(String title) {
+//        return this.bookService.getAuthor(title);
+//    }
+//
+//    public Author getAuthorByISBN(String ISBN) {
+//        return this.bookService.getAuthorByISBN(ISBN);
+//    }
 
     public void addBook(Book book) {
         this.bookService.addBook(book);
@@ -96,4 +96,21 @@ public class ServiceFacade{
     public void addBookToAuthor(Author author, Book book){
         author.addBook(book);
     }
+
+    public void updateAuthor(Author author){
+        this.authorService.updateAuthor(author);
+    }
+
+    public Author getAuthorById(long id){
+        return this.authorService.getAuthorById(id);
+    }
+
+    public void deleteAuthor(long id){
+        this.authorService.deleteAuthor(id);
+    }
+
+    public void updateBook(Book book){
+        this.bookService.updateBook(book);
+    }
+
 }

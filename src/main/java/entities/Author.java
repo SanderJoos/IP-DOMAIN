@@ -29,6 +29,13 @@ public class Author {
         this.setId(Author.getNextId());
     }
 
+    public Author(String name, String lastName, long id){
+        this.setName(name);
+        this.setLastName(lastName);
+        this.books = new ArrayList<Book>();
+        this.setId(id);
+    }
+
     public long getId() {
         return id;
     }

@@ -16,7 +16,8 @@ public class Author {
 
     private List<Book> books;
 
-    private static long id = 0;
+    private static long Id = 0;
+    private long id;
 
     public Author(){
         this.books = new ArrayList<Book>();
@@ -41,8 +42,8 @@ public class Author {
     }
 
     public static long getNextId(){
-        Author.id++;
-        return Author.id;
+        Author.Id++;
+        return Author.Id;
     }
 
     public void setId(long id) {
@@ -89,4 +90,29 @@ public class Author {
         return score/(this.getBooks().size());
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Author){
+            Author a = (Author) o;
+            if(a.name.equals(this.name) && a.lastName.equals(this.lastName) && a.id == this.id){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", books=" + books +
+                ", id=" + id +
+                '}';
+    }
 }

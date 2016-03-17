@@ -24,8 +24,8 @@ public class ServiceFacadeTest {
     @Before
     public void setUp(){
         this.service = new ServiceFacade("hashMap");
-        author1 = new Author("Patrick","Rothfuss");
-        author2 = new Author("Brandon","Sanderson");
+        author1 = new Author("Patrick","Rothfuss",1);
+        author2 = new Author("Brandon","Sanderson",2);
         book1 = new Book("De naam van de wind","1",10);
         book2 = new Book("De wet van staal","2",10);
         service.addAuthor(author1);
@@ -140,5 +140,12 @@ public class ServiceFacadeTest {
     public void testGetAverageScoreForAuthor(){
         service.addBookToAuthor(author1,book1);
         assertTrue(10 == service.getAverageScoreForAuthor(author1.getLastName()));
+    }
+
+    @Test
+    public void testDeleteAuthorByIdWorks(){
+        service.deleteAuthor(1);
+        assertFalse(service.getAllAuthors().contains(author1));
+        assertTrue(service.getAllAuthors().contains(author2));
     }
 }

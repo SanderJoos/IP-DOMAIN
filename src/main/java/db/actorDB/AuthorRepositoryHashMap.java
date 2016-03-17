@@ -86,7 +86,12 @@ public class AuthorRepositoryHashMap implements IAuthorRepository {
         if(author == null){
             throw new DatabaseException("We can't update an author if we don't know which one");
         }
-        this.deleteAuthor(author);
+        long id = author.getId();
+        Author toRemove = null;
+        if(this.authorsById.get(id) != null){
+            toRemove = authorsById.get(id);
+        }
+        this.deleteAuthor(toRemove);
         this.authors.put(author.getLastName(), author);
         this.authorsById.put(author.getId(),author);
     }

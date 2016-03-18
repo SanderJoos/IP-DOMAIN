@@ -15,18 +15,23 @@ import java.util.Map;
  */
 public class BookRepositoryHashMap implements IBookRepository {
 
-    private static Map<String, Book> bookByTitle = new HashMap<String, Book>();
     private static Map<String, Book> bookByISBN = new HashMap<String, Book>();
 
     public List<Book> getAllBooks() {
-        return new ArrayList<Book>(this.bookByTitle.values());
+        return new ArrayList<Book>(this.bookByISBN.values());
     }
 
     public Book getBook(String title) {
         if(title.isEmpty()){
             throw new DatabaseException("Book can't be found based on an empty title");
         }
-        return this.bookByTitle.get(title);
+        List<Book> books = this.getAllBooks();
+        for (Book b : books) {
+            if (b.getTitle().equals(title)) {
+                return b;
+            }
+        }
+        return null;
     }
 
     public Book getBookByISBN(String ISBN) {
@@ -50,7 +55,6 @@ public class BookRepositoryHashMap implements IBookRepository {
         }
         Book book = this.getBook(title);
         this.bookByISBN.remove(book.getISBN());
-        this.bookByTitle.remove(book.getTitle());
     }
 
     public void deleteBook(Book book) {
@@ -58,16 +62,13 @@ public class BookRepositoryHashMap implements IBookRepository {
             throw new DatabaseException("Book can't be found");
         }
         this.bookByISBN.remove(book.getISBN());
-        this.bookByTitle.remove(book.getTitle());
     }
 
     public void deleteBookByISBN(String ISBN) {
         if(ISBN.isEmpty()){
             throw new DatabaseException("Book can't be found based on an empty ISBN");
         }
-        Book book = this.getBookByISBN(ISBN);
-        this.bookByISBN.remove(book.getISBN());
-        this.bookByTitle.remove(book.getTitle());
+        this.bookByISBN.remove(ISBN);
     }
 
     public void addBook(Book book) {
@@ -75,7 +76,6 @@ public class BookRepositoryHashMap implements IBookRepository {
             throw new DatabaseException("Book can't be added because it doesn't exist");
         }
         this.bookByISBN.put(book.getISBN(), book);
-        this.bookByTitle.put(book.getTitle(), book);
     }
 
     public void updateBook(Book book) {
@@ -84,6 +84,5 @@ public class BookRepositoryHashMap implements IBookRepository {
         }
         this.deleteBook(book);
         this.bookByISBN.put(book.getISBN(), book);
-        this.bookByTitle.put(book.getTitle(), book);
     }
 }

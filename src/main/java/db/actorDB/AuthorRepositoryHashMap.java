@@ -14,25 +14,29 @@ import java.util.Map;
  */
 public class AuthorRepositoryHashMap implements IAuthorRepository {
 
-    private static Map<String, Author> authors;
     private static Map<Long, Author> authorsById;
 
     public AuthorRepositoryHashMap(){
-        this.authors = new HashMap<String, Author>();
         this.authorsById = new HashMap<Long, Author>();
         this.addAuthor(new Author("Patrick","Rothfuss"));
         this.addAuthor(new Author("Brandon","Sanderson"));
     }
 
     public List<Author> getAllAuthors() {
-        return new ArrayList<Author>(this.authors.values());
+        return new ArrayList<Author>(this.authorsById.values());
     }
 
     public Author getAuthor(String lastName) {
         if(lastName.isEmpty()){
             throw new DatabaseException("An author can't be found based on an empty lastName");
         }
-        return this.authors.get(lastName);
+        List<Author> authors = this.getAllAuthors();
+        for (Author a : authors) {
+            if (a.getLastName().equals(lastName)) {
+                return a;
+            }
+        }
+        return null;
     }
 
     public List<Book> getBooksFromAuthor(String name, String lastName) {
@@ -46,7 +50,6 @@ public class AuthorRepositoryHashMap implements IAuthorRepository {
         if(author == null){
             throw new DatabaseException("We can't delete a non existing author");
         }
-        this.authors.remove(author.getLastName());
         this.authorsById.remove(author.getId());
     }
 
@@ -55,7 +58,6 @@ public class AuthorRepositoryHashMap implements IAuthorRepository {
             throw new DatabaseException("We can't delete an author based on an empty name");
         }
         Author author = this.getAuthor(lastName);
-        this.authors.remove(author.getLastName());
         this.authorsById.remove(author.getId());
     }
 
@@ -63,7 +65,6 @@ public class AuthorRepositoryHashMap implements IAuthorRepository {
         if(author == null){
             throw new DatabaseException("We can't add a non existing author");
         }
-        this.authors.put(author.getLastName(),author);
         this.authorsById.put(author.getId(),author);
     }
 
@@ -82,24 +83,17 @@ public class AuthorRepositoryHashMap implements IAuthorRepository {
         return this.authorsById.get(id);
     }
 
-    public void updateAuthor(Author author){
-        if(author == null){
+    public void updateAuthor(Author author) {
+        if (author == null) {
             throw new DatabaseException("We can't update an author if we don't know which one");
         }
-        long id = author.getId();
-        Author toRemove = null;
-        if(this.authorsById.get(id) != null){
-            toRemove = authorsById.get(id);
-        }
-        this.deleteAuthor(toRemove);
-        this.authors.put(author.getLastName(), author);
-        this.authorsById.put(author.getId(),author);
+        this.authorsById.remove(author.getId());
+        this.addAuthor(author);
     }
 
     public void deleteAuthor(long id){
         Author author = this.authorsById.get(id);
-        this.authors.remove(author.getLastName());
-        this.authors.remove(id);
+        this.authorsById.remove(id);
     }
 
 }

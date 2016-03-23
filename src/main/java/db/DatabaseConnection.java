@@ -1,9 +1,13 @@
 package db;
 
+import Exceptions.DatabaseException;
+
 /**
- * Created by Sander_2 on 11/02/2016.
+ * Created by Sander Joos on 11/02/2016.
  */
 
-public class DatabaseConnection {
+public abstract class DatabaseConnection {
+    
+    public abstract void closeConnection() throws DatabaseException;
 
 }

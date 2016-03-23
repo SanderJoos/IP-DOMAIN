@@ -12,14 +12,19 @@ import java.util.Map;
 /**
  * @author Sander Joos
  */
-public class AuthorRepositoryHashMap implements IAuthorRepository {
+public class AuthorRepositoryInMemory implements IAuthorRepository {
+    
+    private static int counter = 0;
 
     private static Map<Long, Author> authorsById;
 
-    public AuthorRepositoryHashMap(){
+    public AuthorRepositoryInMemory(){
         this.authorsById = new HashMap<Long, Author>();
-        this.addAuthor(new Author("Patrick","Rothfuss"));
-        this.addAuthor(new Author("Brandon","Sanderson"));
+    }
+    
+    public static int getNextID(){
+        counter++;
+        return counter;
     }
 
     public List<Author> getAllAuthors() {
@@ -65,6 +70,7 @@ public class AuthorRepositoryHashMap implements IAuthorRepository {
         if(author == null){
             throw new DatabaseException("We can't add a non existing author");
         }
+        author.setId(AuthorRepositoryInMemory.getNextID());
         this.authorsById.put(author.getId(),author);
     }
 

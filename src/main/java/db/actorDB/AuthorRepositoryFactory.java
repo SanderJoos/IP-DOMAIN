@@ -9,10 +9,10 @@ public class AuthorRepositoryFactory {
 
     public IAuthorRepository getAuthorRepository(String actorRepositoryKind){
         if(actorRepositoryKind.equals(AuthorRepositoryType.POSTGRESQL.getSimpleName())){
-            return new AuthorRepositoryPostgresql();
+            return new AuthorRepositoryRelationalDB("IP-DomainPU");
         }
         else{
-            return new AuthorRepositoryHashMap();
+            return new AuthorRepositoryInMemory();
         }
     }
 }

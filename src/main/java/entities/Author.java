@@ -4,19 +4,25 @@ import Exceptions.DomainException;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * @author Sander Joos
  * @version 0.0.1
  */
+
+@Entity
 public class Author {
 
     private String name;
     private String lastName;
 
     private List<Book> books;
-
-    private static long Id = 0;
+    
+    @Id
+    @GeneratedValue
     private long id;
 
     public Author(){
@@ -27,7 +33,6 @@ public class Author {
         this.setName(name);
         this.setLastName(lastName);
         this.books = new ArrayList<Book>();
-        this.setId(Author.getNextId());
     }
 
     public Author(String name, String lastName, long id){
@@ -39,11 +44,6 @@ public class Author {
 
     public long getId() {
         return id;
-    }
-
-    public static long getNextId(){
-        Author.Id++;
-        return Author.Id;
     }
 
     public void setId(long id) {

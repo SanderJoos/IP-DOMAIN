@@ -1,12 +1,21 @@
 package entities;
 
 import Exceptions.DomainException;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * @author Sander Joos
  */
+
+@Entity
 public class Book {
 
+    @Id
+    @GeneratedValue
+    private long id;
+    
     String title;
     String ISBN;
     int score;

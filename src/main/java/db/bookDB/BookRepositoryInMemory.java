@@ -22,7 +22,7 @@ public class BookRepositoryInMemory implements IBookRepository {
     }
     
     public Book getBookById(long id){
-        return this.booksById.get(id);
+       return this.booksById.get(id);
     }
     
     public List<Book> getAllBooks() {

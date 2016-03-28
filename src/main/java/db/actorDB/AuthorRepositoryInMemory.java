@@ -94,7 +94,7 @@ public class AuthorRepositoryInMemory implements IAuthorRepository {
             throw new DatabaseException("We can't update an author if we don't know which one");
         }
         this.authorsById.remove(author.getId());
-        this.addAuthor(author);
+        this.authorsById.put(author.getId(), author);
     }
 
     public void deleteAuthor(long id){

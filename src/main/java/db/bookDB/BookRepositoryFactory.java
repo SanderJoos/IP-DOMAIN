@@ -9,10 +9,10 @@ public class BookRepositoryFactory {
 
     public IBookRepository getBookRepository(String bookRepositoryKind){
         if(bookRepositoryKind.equals(BookRepositoryType.POSTGRESQL.getSimpleName())){
-            return new BookRepositoryPostgresql();
+            return new BookRepositoryRelationalDB();
         }
         else{
-            return new BookRepositoryHashMap();
+            return new BookRepositoryInMemory();
         }
     }
 }

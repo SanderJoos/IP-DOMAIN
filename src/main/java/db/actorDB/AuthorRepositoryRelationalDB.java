@@ -59,7 +59,15 @@ public class AuthorRepositoryRelationalDB extends DatabaseConnection implements 
     }
 
     public void deleteAuthor(Author author) {
-
+        try{
+            manager.getTransaction().begin();
+            manager.remove(author);
+            manager.flush();
+            manager.getTransaction().commit();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public void deleteAuthor(String lastName) {
@@ -68,12 +76,12 @@ public class AuthorRepositoryRelationalDB extends DatabaseConnection implements 
 
     public List<Author> getAllAuthors() {
         try{
-            Query query = manager.createQuery("select s from Author a");
+            Query query = manager.createQuery("select a from Author a");
+            return query.getResultList();
         }
         catch(Exception e){
             throw new DatabaseException(e.getMessage());
         }
-        return null;
     }
 
     public Author getAuthor(String name, String lastName) {

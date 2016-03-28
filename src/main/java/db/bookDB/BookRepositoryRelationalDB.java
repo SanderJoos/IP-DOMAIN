@@ -8,9 +8,9 @@ import java.util.List;
 /**
  * @author Sander Joos
  */
-public class BookRepositoryPostgresql implements IBookRepository {
+public class BookRepositoryRelationalDB implements IBookRepository {
 
-    public BookRepositoryPostgresql(){
+    public BookRepositoryRelationalDB(){
 
     }
 
@@ -52,5 +52,13 @@ public class BookRepositoryPostgresql implements IBookRepository {
 
     public void updateBook(Book book) {
 
+    }
+
+    public Book getBookById(long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void deleteBook(long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -21,4 +21,6 @@ public interface IBookRepository {
     void deleteBook(Book book);
 
     void updateBook(Book book);
+    Book getBookById(long id);
+    void deleteBook(long id);
 }

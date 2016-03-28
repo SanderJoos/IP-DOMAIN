@@ -66,5 +66,13 @@ public class BookService{
     public void updateBook(Book book){
         this.getRepository().updateBook(book);
     }
+    
+    public Book getBookById(long id){
+        return this.repository.getBookById(id);
+    }
+    
+    public void deleteBook(long id){
+        this.repository.deleteBook(id);
+    }
 
 }

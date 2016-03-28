@@ -30,10 +30,19 @@ public class Book {
         this.setTitle(title);
     }
 
-    public Book(String title, String ISBN, int score,  Author author){
+    public Book(String title, String ISBN, int score, long id){
         this.setISBN(ISBN);
         this.setScore(score);
         this.setTitle(title);
+        this.setId(id);
+    }
+    
+    public void setId(long id){
+        this.id = id;
+    }
+    
+    public long getId(){
+        return this.id;
     }
 
     public String getTitle() {

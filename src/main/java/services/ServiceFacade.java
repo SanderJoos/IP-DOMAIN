@@ -112,5 +112,13 @@ public class ServiceFacade{
     public void updateBook(Book book){
         this.bookService.updateBook(book);
     }
+    
+    public Book getBookById(long id){
+        return this.bookService.getBookById(id);
+    }
+    
+    public void deleteBook(long id){
+        this.bookService.deleteBook(id);
+    }
 
 }

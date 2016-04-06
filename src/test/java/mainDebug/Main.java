@@ -11,13 +11,13 @@ import services.ServiceFacade;
 public class Main {
     
     public static void main(String[] args){
-        ServiceFacade facade = new ServiceFacade("hashMap");
+        ServiceFacade facade = new ServiceFacade("postgresql");
         Author a = new Author("a","a");
         Author b = new Author("b","b");
         facade.addAuthor(a);
         facade.addAuthor(b);
         System.out.println(facade.getAllAuthors());
-        System.out.println(facade.getAuthor("a"));
+        System.out.println(facade.getAuthorById(a.getId()));
         facade.deleteAuthor(1);
         System.out.println(facade.getAllAuthors());       
     }

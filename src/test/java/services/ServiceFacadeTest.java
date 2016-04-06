@@ -5,6 +5,7 @@ import entities.Book;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.List;
+import org.junit.After;
 
 import static org.junit.Assert.*;
 
@@ -13,18 +14,17 @@ import static org.junit.Assert.*;
  */
 
 public class ServiceFacadeTest {
-
-    private ServiceFacade service;
-
+    
     public static Book book1;
     public static Book book2;
 
     public static Author author1;
     public static Author author2;
+    
+     private ServiceFacade service = new ServiceFacade("hashMap");
 
     @Before
     public void setUp(){
-        this.service = new ServiceFacade("hashMap");
         book1 = new Book("De naam van de wind","1",10);
         book2 = new Book("De wet van staal","2",10);
         author1 = new Author("Patrick","Rothfuss");
@@ -33,6 +33,14 @@ public class ServiceFacadeTest {
         service.addAuthor(author2);
         service.addBook(book1);
         service.addBook(book2);
+    }
+    
+    @After
+    public void tearDown(){
+        service.deleteAuthor(author1);
+        service.deleteAuthor(author2);
+        service.deleteBook(book1);
+        service.deleteBook(book2);
     }
 
     @Test

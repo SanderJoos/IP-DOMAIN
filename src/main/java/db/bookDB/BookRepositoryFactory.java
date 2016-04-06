@@ -9,7 +9,7 @@ public class BookRepositoryFactory {
 
     public IBookRepository getBookRepository(String bookRepositoryKind){
         if(bookRepositoryKind.equals(BookRepositoryType.POSTGRESQL.getSimpleName())){
-            return new BookRepositoryRelationalDB();
+            return new BookRepositoryRelationalDB("IP-DomainPU");
         }
         else{
             return new BookRepositoryInMemory();

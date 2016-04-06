@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  * @author Sander Joos
@@ -19,6 +20,7 @@ public class Author {
     private String name;
     private String lastName;
 
+    @OneToMany
     private List<Book> books;
     
     @Id
@@ -83,6 +85,9 @@ public class Author {
     }
 
     public double getAverageScore() {
+        if(this.getBooks().size() == 0){
+            return 0;
+        }
         double score = 0;
         for(Book book : this.getBooks()){
             score =+ book.getScore();

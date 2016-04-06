@@ -1,29 +1,68 @@
 package db.bookDB;
 
+import Exceptions.DatabaseException;
+import db.DatabaseConnection;
 import entities.Author;
 import entities.Book;
 
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  * @author Sander Joos
  */
-public class BookRepositoryRelationalDB implements IBookRepository {
+public class BookRepositoryRelationalDB extends DatabaseConnection implements IBookRepository {
 
-    public BookRepositoryRelationalDB(){
+    private EntityManagerFactory factory;
+    private EntityManager manager;
+    
+   public void closeConnection() throws DatabaseException{
+        try{
+            manager.close();
+            factory.close();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
+    }
 
+    public BookRepositoryRelationalDB(String name){
+        factory=Persistence.createEntityManagerFactory(name);
+        manager = factory.createEntityManager();
     }
 
     public List<Book> getAllBooks() {
-        return null;
+        try{
+            Query query = manager.createQuery("select b from Book b");
+            return query.getResultList();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public Book getBook(String title) {
-        return null;
+        try{
+            TypedQuery<Book> query = manager.createQuery("select b from Book b where b.title = :title", Book.class);
+            return query.setParameter("title",title).getSingleResult();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public Book getBookByISBN(String ISBN) {
-        return null;
+        try{
+            TypedQuery<Book> query = manager.createQuery("select b from Book b where b.ISBN = :ISBN", Book.class);
+            return query.setParameter("ISBN",ISBN).getSingleResult();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
 //    public Author getAuthorByTitle(String title) {
@@ -35,30 +74,70 @@ public class BookRepositoryRelationalDB implements IBookRepository {
 //    }
 
     public void addBook(Book book) {
-
+         try{
+            manager.getTransaction().begin();
+            manager.persist(book);
+            manager.flush();
+            manager.getTransaction().commit();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public void deleteBook(String title) {
-
+        Book book = this.getBook(title);
+        try{
+            manager.getTransaction().begin();
+            manager.remove(book);
+            manager.flush();
+            manager.getTransaction().commit();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public void deleteBookByISBN(String ISBN) {
-
+        Book book = this.getBookByISBN(ISBN);
+        try{
+            manager.getTransaction().begin();
+            manager.remove(book);
+            manager.flush();
+            manager.getTransaction().commit();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public void deleteBook(Book book) {
-
+        try{
+            manager.getTransaction().begin();
+            manager.remove(book);
+            manager.flush();
+            manager.getTransaction().commit();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public void updateBook(Book book) {
-
+        Book b = this.getBookById(book.getId());
+        b.setId(book.getId());
+        b.setISBN(book.getISBN());
+        b.setScore(book.getScore());
+        b.setTitle(book.getTitle());
+        manager.flush();
     }
 
     public Book getBookById(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return manager.find(Book.class, id);
     }
 
     public void deleteBook(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Book b = this.getBookById(id);
+        this.deleteBook(b);
     }
 }

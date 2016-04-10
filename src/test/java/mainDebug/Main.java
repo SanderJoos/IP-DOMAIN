@@ -18,8 +18,7 @@ public class Main {
         facade.addAuthor(b);
         System.out.println(facade.getAllAuthors());
         System.out.println(facade.getAuthorById(a.getId()));
-        facade.deleteAuthor(1);
-        System.out.println(facade.getAllAuthors());       
+        facade.deleteAuthor(a.getId());      
     }
     
 }

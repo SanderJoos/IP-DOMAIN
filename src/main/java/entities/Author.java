@@ -19,6 +19,7 @@ public class Author {
 
     private String name;
     private String lastName;
+    private double averageScore;
 
     @OneToMany
     private List<Book> books;
@@ -29,12 +30,14 @@ public class Author {
 
     public Author(){
         this.books = new ArrayList<Book>();
+        this.averageScore = 0;
     }
 
     public Author(String name, String lastName){
         this.setName(name);
         this.setLastName(lastName);
         this.books = new ArrayList<Book>();
+        this.averageScore = 0;
     }
 
     public Author(String name, String lastName, long id){
@@ -42,6 +45,15 @@ public class Author {
         this.setLastName(lastName);
         this.books = new ArrayList<Book>();
         this.setId(id);
+        this.averageScore = 0;
+    }
+    
+    public void setAverageScore(double score){
+        this.averageScore = score;
+    }
+    
+    public double getAverageScore(){
+        return this.averageScore;
     }
 
     public long getId() {
@@ -82,9 +94,10 @@ public class Author {
         if(! this.books.contains(book)) {
             this.books.add(book);
         }
+        this.setAverageScore(this.calculateAverageScore());
     }
 
-    public double getAverageScore() {
+    public double calculateAverageScore() {
         if(this.getBooks().size() == 0){
             return 0;
         }

@@ -4,6 +4,7 @@ import db.actorDB.IAuthorRepository;
 import db.bookDB.IBookRepository;
 import entities.Author;
 import entities.Book;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -119,6 +120,14 @@ public class ServiceFacade{
     
     public void deleteBook(long id){
         this.bookService.deleteBook(id);
+    }
+    
+    public List<String> getAllBookTitles(){
+        List<String> titles = new ArrayList<String>();
+        for(Book b : this.getAllBooks()){
+            titles.add(b.getTitle());
+        }
+        return titles;
     }
 
 }

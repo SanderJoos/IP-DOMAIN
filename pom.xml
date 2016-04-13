@@ -6,15 +6,27 @@
 
     <groupId>IP</groupId>
     <artifactId>IP-Domain</artifactId>
-    <version>3.1.5</version>
+    <version>3.2.0</version>
 
     <properties>
         <junit.version>4.12</junit.version>
         <eclipsePersistence.version>2.5.2</eclipsePersistence.version>
         <derby.version>10.12.1.1</derby.version>
+        <hibernateValidator.version>5.1.3.Final</hibernateValidator.version>
+        <javaxEl.version>2.2.4</javaxEl.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernateValidator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>javax.el</artifactId>
+            <version>${javaxEl.version}</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

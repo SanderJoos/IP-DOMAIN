@@ -22,5 +22,7 @@ public interface IAuthorRepository {
     void updateAuthor(Author author);
     Author getAuthorById(long id);
     void deleteAuthor(long id);
+    
+    public void closeConnection();
 
 }

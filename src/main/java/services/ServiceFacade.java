@@ -1,12 +1,20 @@
 package services;
 
-import db.actorDB.IAuthorRepository;
-import db.bookDB.IBookRepository;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import entities.Author;
 import entities.Book;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.springframework.web.client.RestTemplate;
+import rest.entities.AGOTBookLibrary;
 
 /**
  * @author Sander Joos
@@ -15,10 +23,39 @@ public class ServiceFacade{
 
     AuthorService authorService;
     BookService bookService;
+    
+    AGOTBookLibrary AGOTBooks;
+    
+    RestTemplate restTemplate = new RestTemplate();
 
     public ServiceFacade(String repositoryKind){
         this.authorService = new AuthorService(repositoryKind);
         this.bookService = new BookService(repositoryKind);
+        try {
+            //        String url= "http://anapioficeandfire.com/api/books/";
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+//        try {
+//            AGOTBooks = mapper.readValue(new URL(url),AGOTBookLibrary.class);
+//        } catch (Exception ex) {
+//            System.out.println(ex.getMessage());
+//        }
+
+//        AGOTBooks = restTemplate.getForObject("http://anapioficeandfire.com/api/books/", AGOTBookLibrary.class);
+            URL url = new URL("http://anapioficeandfire.com/api/books/");
+            InputStream inputStream = url.openConnection().getInputStream();
+            ObjectMapper mapper = new ObjectMapper();
+            AGOTBooks = mapper.readValue(inputStream, AGOTBookLibrary.class);
+        } 
+        catch (Exception ex) {
+           System.out.println(ex.getMessage());
+        }
+        
+    }
+       
+    public void closeConnection(){
+        this.bookService.getRepository().closeConnection();
+        this.authorService.getAuthorRepository().closeConnection();
     }
 
     public List<Author> getAllAuthors() {
@@ -128,6 +165,10 @@ public class ServiceFacade{
             titles.add(b.getTitle());
         }
         return titles;
+    }
+    
+    public String printAGOTBookLibrary(){
+        return this.AGOTBooks.toString();
     }
 
 }

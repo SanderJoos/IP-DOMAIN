@@ -23,4 +23,6 @@ public interface IBookRepository {
     void updateBook(Book book);
     Book getBookById(long id);
     void deleteBook(long id);
+    
+    public void closeConnection();
 }

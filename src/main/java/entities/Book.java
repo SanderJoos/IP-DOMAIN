@@ -1,10 +1,11 @@
 package entities;
 
-import Exceptions.DomainException;
+import exceptions.DomainException;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
+import javax.validation.*;
+import javax.validation.constraints.*;
 /**
  * @author Sander Joos
  */
@@ -16,8 +17,14 @@ public class Book {
     @GeneratedValue
     private long id;
     
+    @NotNull(message="title may not be null")
     String title;
+    
+    @NotNull(message="ISBN may not be null")
     String ISBN;
+    
+    @Min(0)
+    @Max(10)
     int score;
 
     public Book(){

@@ -1,6 +1,6 @@
 package db.actorDB;
 
-import Exceptions.DatabaseException;
+import exceptions.DatabaseException;
 import db.DatabaseConnection;
 import entities.Author;
 import entities.Book;
@@ -104,11 +104,13 @@ public class AuthorRepositoryRelationalDB extends DatabaseConnection implements 
     }
 
     public void updateAuthor(Author author) {
+        manager.getTransaction().begin();
         Author a = this.getAuthorById(author.getId());
         a.setId(author.getId());
         a.setLastName(author.getLastName());
         a.setName(author.getName());
         manager.flush();
+        manager.getTransaction().commit();
     }
 
     public Author getAuthorById(long id) {

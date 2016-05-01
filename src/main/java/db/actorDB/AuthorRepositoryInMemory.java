@@ -1,6 +1,6 @@
 package db.actorDB;
 
-import Exceptions.DatabaseException;
+import exceptions.DatabaseException;
 import entities.Author;
 import entities.Book;
 
@@ -100,6 +100,10 @@ public class AuthorRepositoryInMemory implements IAuthorRepository {
     public void deleteAuthor(long id){
         Author author = this.authorsById.get(id);
         this.authorsById.remove(id);
+    }
+
+    public void closeConnection() {
+       System.out.println("I is hashmap");
     }
 
 }

@@ -1,6 +1,6 @@
 package db.bookDB;
 
-import Exceptions.DatabaseException;
+import exceptions.DatabaseException;
 import entities.Book;
 
 import java.util.ArrayList;
@@ -109,5 +109,9 @@ public class BookRepositoryInMemory implements IBookRepository {
 
     public void deleteBook(long id) {
        this.booksById.remove(id);
+    }
+
+    public void closeConnection() {
+       System.out.println("I iz hashmap");
     }
 }

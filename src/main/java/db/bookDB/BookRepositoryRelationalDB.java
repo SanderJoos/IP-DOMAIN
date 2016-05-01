@@ -1,6 +1,6 @@
 package db.bookDB;
 
-import Exceptions.DatabaseException;
+import exceptions.DatabaseException;
 import db.DatabaseConnection;
 import entities.Author;
 import entities.Book;
@@ -41,6 +41,7 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
             return query.getResultList();
         }
         catch(Exception e){
+            this.closeConnection();
             throw new DatabaseException(e.getMessage());
         }
     }
@@ -51,6 +52,7 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
             return query.setParameter("title",title).getSingleResult();
         }
         catch(Exception e){
+            this.closeConnection();
             throw new DatabaseException(e.getMessage());
         }
     }
@@ -61,6 +63,7 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
             return query.setParameter("ISBN",ISBN).getSingleResult();
         }
         catch(Exception e){
+            this.closeConnection();
             throw new DatabaseException(e.getMessage());
         }
     }
@@ -81,6 +84,8 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
             manager.getTransaction().commit();
         }
         catch(Exception e){
+            manager.getTransaction().rollback();                     
+            this.closeConnection();
             throw new DatabaseException(e.getMessage());
         }
     }
@@ -94,6 +99,7 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
             manager.getTransaction().commit();
         }
         catch(Exception e){
+            this.closeConnection();
             throw new DatabaseException(e.getMessage());
         }
     }
@@ -107,6 +113,8 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
             manager.getTransaction().commit();
         }
         catch(Exception e){
+            manager.getTransaction().rollback();
+            this.closeConnection();
             throw new DatabaseException(e.getMessage());
         }
     }
@@ -119,25 +127,48 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
             manager.getTransaction().commit();
         }
         catch(Exception e){
+            manager.getTransaction().rollback();
+            this.closeConnection();
             throw new DatabaseException(e.getMessage());
         }
     }
 
     public void updateBook(Book book) {
-        Book b = this.getBookById(book.getId());
-        b.setId(book.getId());
-        b.setISBN(book.getISBN());
-        b.setScore(book.getScore());
-        b.setTitle(book.getTitle());
-        manager.flush();
+        try{
+            manager.getTransaction().begin();
+            Book b = this.getBookById(book.getId());
+            b.setId(book.getId());
+            b.setISBN(book.getISBN());
+            b.setScore(book.getScore());
+            b.setTitle(book.getTitle());
+            manager.flush();
+            manager.getTransaction().commit();
+        }
+        catch(Exception e){
+            manager.getTransaction().rollback();
+            this.closeConnection();
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public Book getBookById(long id) {
-        return manager.find(Book.class, id);
+        try{
+            return manager.find(Book.class, id);
+        }
+        catch(Exception e){
+            this.closeConnection();
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public void deleteBook(long id) {
-        Book b = this.getBookById(id);
-        this.deleteBook(b);
+        try{
+            Book b = this.getBookById(id);
+            this.deleteBook(b);
+        }
+        catch(Exception e){
+            this.closeConnection();
+            throw new DatabaseException(e.getMessage());
+        }
     }
 }

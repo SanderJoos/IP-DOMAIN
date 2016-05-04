@@ -1,6 +1,6 @@
 package db;
 
-import exceptions.DatabaseException;
+import Exceptions.DatabaseException;
 
 /**
  * Created by Sander Joos on 11/02/2016.

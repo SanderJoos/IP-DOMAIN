@@ -1,6 +1,6 @@
 package db.actorDB;
 
-import exceptions.DatabaseException;
+import Exceptions.DatabaseException;
 import entities.Author;
 import entities.Book;
 

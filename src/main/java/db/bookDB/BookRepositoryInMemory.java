@@ -1,6 +1,6 @@
 package db.bookDB;
 
-import exceptions.DatabaseException;
+import Exceptions.DatabaseException;
 import entities.Book;
 
 import java.util.ArrayList;

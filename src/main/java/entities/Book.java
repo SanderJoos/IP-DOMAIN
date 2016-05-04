@@ -1,6 +1,6 @@
 package entities;
 
-import exceptions.DomainException;
+import Exceptions.DomainException;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

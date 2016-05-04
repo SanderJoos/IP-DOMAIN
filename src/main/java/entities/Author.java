@@ -1,6 +1,6 @@
 package entities;
 
-import exceptions.DomainException;
+import Exceptions.DomainException;
 
 import java.util.ArrayList;
 import java.util.List;

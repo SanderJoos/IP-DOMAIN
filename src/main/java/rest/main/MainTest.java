@@ -16,7 +16,7 @@ public class MainTest {
     
     public static void main(String[] args){
         ServiceFacade service = new ServiceFacade("hashMap");
-        System.out.println(service.printAGOTBookLibrary());
+        //System.out.println(service.printAGOTBookLibrary());
     }
 }
 

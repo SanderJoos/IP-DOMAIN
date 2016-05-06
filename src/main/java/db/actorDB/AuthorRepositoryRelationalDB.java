@@ -27,21 +27,45 @@ public class AuthorRepositoryRelationalDB extends DatabaseConnection implements 
     
     public void closeConnection() throws DatabaseException{
         try{
-            manager.close();
             factory.close();
         }
         catch(Exception e){
             throw new DatabaseException(e.getMessage());
         }
     }
+   
+    public void closeManager() throws DatabaseException{
+       try{
+           manager.close();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
+    }
+    
+    public void openConnection(){
+        try {
+            manager = factory.createEntityManager();
+        } 
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
+        }
+    }
 
     public Author getAuthor(String lastName) {
         try{
-            TypedQuery<Author> query = manager.createQuery("select a from Author a where a.lastName  > :lastName", Author.class);
+            this.openConnection();
+            TypedQuery<Author> query = manager.createQuery("select a from Author a where a.lastName  = :lastName", Author.class);
             return query.setParameter("lastName", lastName).getSingleResult();
         }
         catch(Exception e){
             throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
         }
     }
 
@@ -50,25 +74,38 @@ public class AuthorRepositoryRelationalDB extends DatabaseConnection implements 
     }
 
     public List<Book> getBooksFromAuthor(String lastName) {
-        TypedQuery<Author> query = manager.createQuery("select a from Author a where a.lastName > :lastName", Author.class);
-        return query.setParameter("lastName", lastName).getSingleResult().getBooks();
+        try{
+            this.openConnection();
+            TypedQuery<Author> query = manager.createQuery("select a from Author a where a.lastName = :lastName", Author.class);
+            return query.setParameter("lastName", lastName).getSingleResult().getBooks();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
+        }
     }
 
     public void addAuthor(Author author) throws DatabaseException{
-
-            try{
-                manager.getTransaction().begin();
-                manager.persist(author);
-                manager.flush();
-                manager.getTransaction().commit();
-            }
-            catch(Exception e){
-                throw new DatabaseException(e.getMessage());
-            }
+        try{
+            this.openConnection();
+            manager.getTransaction().begin();
+            manager.persist(author);
+            manager.flush();
+            manager.getTransaction().commit();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
+        }
     }
 
     public void deleteAuthor(Author author) {
         try{
+            this.openConnection();
             manager.getTransaction().begin();
             manager.remove(author);
             manager.flush();
@@ -77,50 +114,97 @@ public class AuthorRepositoryRelationalDB extends DatabaseConnection implements 
         catch(Exception e){
             throw new DatabaseException(e.getMessage());
         }
+        finally{
+            this.closeManager();
+        }
     }
 
     public void deleteAuthor(String lastName) {
         try{
+            this.openConnection();
             Query query = manager.createQuery("delete from Author a where a.lastName = :lastName");
             query.setParameter("lastName",lastName).executeUpdate();
         }
         catch(Exception e){
             throw new DatabaseException(e.getMessage());
         }
+        finally{
+            this.closeManager();
+        }
     }
 
     public List<Author> getAllAuthors() {
         try{
+            this.openConnection();
             Query query = manager.createQuery("select a from Author a");
             return query.getResultList();
         }
         catch(Exception e){
             throw new DatabaseException(e.getMessage());
         }
+        finally{
+            this.closeManager();
+        }
     }
 
     public Author getAuthor(String name, String lastName) {
-        return this.getAuthor(lastName);
+        try{
+            this.openConnection();
+            return this.getAuthor(lastName);
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
+        }
     }
 
     public void updateAuthor(Author author) {
-        manager.getTransaction().begin();
-        Author a = this.getAuthorById(author.getId());
-        a.setId(author.getId());
-        a.setLastName(author.getLastName());
-        a.setName(author.getName());
-        manager.flush();
-        manager.getTransaction().commit();
+        try{
+            this.openConnection();
+            manager.getTransaction().begin();
+            Author a = this.getAuthorById(author.getId());
+            a.setId(author.getId());
+            a.setLastName(author.getLastName());
+            a.setName(author.getName());
+            manager.flush();
+            manager.getTransaction().commit();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
+        }
     }
 
     public Author getAuthorById(long id) {
-        return manager.find(Author.class, id);
+        try{
+            this.openConnection();
+            return manager.find(Author.class, id);
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
+        }
     }
 
     public void deleteAuthor(long id) {
-        Author author = this.getAuthorById(id);
-        manager.getTransaction().begin();
-        manager.remove(author);
-        manager.getTransaction().commit();
+        try{
+            this.openConnection();
+            Author author = this.getAuthorById(id);
+            manager.getTransaction().begin();
+            manager.remove(author);
+            manager.getTransaction().commit();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
+        }
     }
 }

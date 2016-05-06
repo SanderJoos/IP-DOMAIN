@@ -32,8 +32,5 @@ public class AGOTBookLibrary {
             toReturn += books.toString() + "\n";
         }
         return toReturn;
-    }
-    
-    
-    
+    }    
 }

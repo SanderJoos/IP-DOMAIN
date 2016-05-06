@@ -20,51 +20,75 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
     private EntityManagerFactory factory;
     private EntityManager manager;
     
+     public BookRepositoryRelationalDB(String name){
+        factory=Persistence.createEntityManagerFactory(name);
+    }
+    
    public void closeConnection() throws DatabaseException{
         try{
-            manager.close();
             factory.close();
         }
         catch(Exception e){
             throw new DatabaseException(e.getMessage());
         }
     }
-
-    public BookRepositoryRelationalDB(String name){
-        factory=Persistence.createEntityManagerFactory(name);
-        manager = factory.createEntityManager();
+   
+    public void closeManager() throws DatabaseException{
+       try{
+           manager.close();
+        }
+        catch(Exception e){
+            throw new DatabaseException(e.getMessage());
+        }
+    }
+    
+    public void openConnection(){
+        try {
+            manager = factory.createEntityManager();
+        } catch (Exception e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 
     public List<Book> getAllBooks() {
         try{
+            this.openConnection();
             Query query = manager.createQuery("select b from Book b");
             return query.getResultList();
         }
         catch(Exception e){
-            this.closeConnection();
             throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
         }
     }
 
     public Book getBook(String title) {
         try{
+            this.openConnection();
             TypedQuery<Book> query = manager.createQuery("select b from Book b where b.title = :title", Book.class);
             return query.setParameter("title",title).getSingleResult();
         }
         catch(Exception e){
-            this.closeConnection();
             throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
         }
     }
 
     public Book getBookByISBN(String ISBN) {
         try{
+            this.openConnection();
             TypedQuery<Book> query = manager.createQuery("select b from Book b where b.ISBN = :ISBN", Book.class);
             return query.setParameter("ISBN",ISBN).getSingleResult();
         }
         catch(Exception e){
-            this.closeConnection();
             throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
         }
     }
 
@@ -78,63 +102,77 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
 
     public void addBook(Book book) {
          try{
+            this.openConnection();
             manager.getTransaction().begin();
             manager.persist(book);
             manager.flush();
             manager.getTransaction().commit();
         }
         catch(Exception e){
-            manager.getTransaction().rollback();                     
-            this.closeConnection();
-            throw new DatabaseException(e.getMessage());
+           manager.getTransaction().rollback();
+           throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
         }
     }
 
     public void deleteBook(String title) {
         Book book = this.getBook(title);
         try{
+            this.openConnection();
             manager.getTransaction().begin();
             manager.remove(book);
             manager.flush();
             manager.getTransaction().commit();
         }
         catch(Exception e){
-            this.closeConnection();
-            throw new DatabaseException(e.getMessage());
+           manager.getTransaction().rollback();
+           throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
         }
     }
 
     public void deleteBookByISBN(String ISBN) {
         Book book = this.getBookByISBN(ISBN);
         try{
+            this.openConnection();
             manager.getTransaction().begin();
             manager.remove(book);
             manager.flush();
             manager.getTransaction().commit();
         }
-        catch(Exception e){
-            manager.getTransaction().rollback();
-            this.closeConnection();
-            throw new DatabaseException(e.getMessage());
+       catch(Exception e){
+           manager.getTransaction().rollback();
+           throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
         }
     }
 
     public void deleteBook(Book book) {
         try{
+            this.openConnection();
             manager.getTransaction().begin();
             manager.remove(book);
             manager.flush();
             manager.getTransaction().commit();
         }
         catch(Exception e){
-            manager.getTransaction().rollback();
-            this.closeConnection();
-            throw new DatabaseException(e.getMessage());
+           manager.getTransaction().rollback();
+           throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
         }
     }
 
     public void updateBook(Book book) {
         try{
+            this.openConnection();
             manager.getTransaction().begin();
             Book b = this.getBookById(book.getId());
             b.setId(book.getId());
@@ -145,30 +183,40 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
             manager.getTransaction().commit();
         }
         catch(Exception e){
-            manager.getTransaction().rollback();
-            this.closeConnection();
-            throw new DatabaseException(e.getMessage());
+           manager.getTransaction().rollback();
+           throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
         }
     }
 
     public Book getBookById(long id) {
         try{
+            this.openConnection();
             return manager.find(Book.class, id);
         }
         catch(Exception e){
-            this.closeConnection();
-            throw new DatabaseException(e.getMessage());
+           manager.getTransaction().rollback();
+           throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
         }
     }
 
     public void deleteBook(long id) {
         try{
+            this.openConnection();
             Book b = this.getBookById(id);
             this.deleteBook(b);
         }
         catch(Exception e){
-            this.closeConnection();
-            throw new DatabaseException(e.getMessage());
+           manager.getTransaction().rollback();
+           throw new DatabaseException(e.getMessage());
+        }
+        finally{
+            this.closeManager();
         }
     }
 }

@@ -13,8 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
 import rest.entities.AGOTBookLibrary;
+import restTemplateConfiguration.userAgentInterceptor;
 
 /**
  * @author Sander Joos
@@ -27,6 +29,8 @@ public class ServiceFacade{
     AGOTBookLibrary AGOTBooks;
     
     RestTemplate restTemplate = new RestTemplate();
+    
+    ClientHttpRequestInterceptor interceptor = new userAgentInterceptor();
 
     public ServiceFacade(String repositoryKind){
         this.authorService = new AuthorService(repositoryKind);
@@ -40,12 +44,18 @@ public class ServiceFacade{
 //        } catch (Exception ex) {
 //            System.out.println(ex.getMessage());
 //        }
+        List<ClientHttpRequestInterceptor> list = new ArrayList<ClientHttpRequestInterceptor>();
+        list.add(interceptor);
+        restTemplate.setInterceptors(list);
 
-//        AGOTBooks = restTemplate.getForObject("http://anapioficeandfire.com/api/books/", AGOTBookLibrary.class);
-            URL url = new URL("http://anapioficeandfire.com/api/books/");
-            InputStream inputStream = url.openConnection().getInputStream();
-            ObjectMapper mapper = new ObjectMapper();
-            AGOTBooks = mapper.readValue(inputStream, AGOTBookLibrary.class);
+        AGOTBooks = restTemplate.getForObject("http://anapioficeandfire.com/api/books/", AGOTBookLibrary.class);
+            //String books = restTemplate.getForObject("http://anapioficeandfire.com/api/books/", String.class);
+            //System.out.println(books);
+
+//            URL url = new URL("http://anapioficeandfire.com/api/books/");
+//            InputStream inputStream = url.openConnection().getInputStream();
+//            ObjectMapper mapper = new ObjectMapper();
+//            AGOTBooks = mapper.readValue(inputStream, AGOTBookLibrary.class);
         } 
         catch (Exception ex) {
            System.out.println(ex.getMessage());

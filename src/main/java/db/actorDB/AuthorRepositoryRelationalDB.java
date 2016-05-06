@@ -50,9 +50,6 @@ public class AuthorRepositoryRelationalDB extends DatabaseConnection implements 
         catch(Exception e){
             throw new DatabaseException(e.getMessage());
         }
-        finally{
-            this.closeManager();
-        }
     }
 
     public Author getAuthor(String lastName) {

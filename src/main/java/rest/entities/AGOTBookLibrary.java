@@ -5,17 +5,22 @@
  */
 package rest.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author Sander_2
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
+
+
 public class AGOTBookLibrary {
     
     private List<AGOTBook> books;
+    
+    public AGOTBookLibrary(){
+        this.books = new ArrayList();
+    }
 
     public List<AGOTBook> getBooks() {
         return books;
@@ -29,7 +34,7 @@ public class AGOTBookLibrary {
     public String toString() {
         String toReturn ="";
         for(AGOTBook book : books){
-            toReturn += books.toString() + "\n";
+            toReturn += book.toString() + "\n";
         }
         return toReturn;
     }    

@@ -1,20 +1,14 @@
 package services;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import entities.Author;
 import entities.Book;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.web.client.RestTemplate;
+import rest.entities.AGOTBook;
 import rest.entities.AGOTBookLibrary;
 import restTemplateConfiguration.userAgentInterceptor;
 
@@ -35,32 +29,8 @@ public class ServiceFacade{
     public ServiceFacade(String repositoryKind){
         this.authorService = new AuthorService(repositoryKind);
         this.bookService = new BookService(repositoryKind);
-        try {
-            //        String url= "http://anapioficeandfire.com/api/books/";
-//        ObjectMapper mapper = new ObjectMapper();
-//        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-//        try {
-//            AGOTBooks = mapper.readValue(new URL(url),AGOTBookLibrary.class);
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//        }
-        List<ClientHttpRequestInterceptor> list = new ArrayList<ClientHttpRequestInterceptor>();
-        list.add(interceptor);
-        restTemplate.setInterceptors(list);
+        this.createAGOTBookLibrary();
 
-        AGOTBooks = restTemplate.getForObject("http://anapioficeandfire.com/api/books/", AGOTBookLibrary.class);
-            //String books = restTemplate.getForObject("http://anapioficeandfire.com/api/books/", String.class);
-            //System.out.println(books);
-
-//            URL url = new URL("http://anapioficeandfire.com/api/books/");
-//            InputStream inputStream = url.openConnection().getInputStream();
-//            ObjectMapper mapper = new ObjectMapper();
-//            AGOTBooks = mapper.readValue(inputStream, AGOTBookLibrary.class);
-        } 
-        catch (Exception ex) {
-           System.out.println(ex.getMessage());
-        }
-        
     }
        
     public void closeConnection(){
@@ -179,6 +149,61 @@ public class ServiceFacade{
     
     public String printAGOTBookLibrary(){
         return this.AGOTBooks.toString();
+    }
+    
+    public void createAGOTBookLibrary(){
+//        try {
+//            //        String url= "http://anapioficeandfire.com/api/books/";
+////        ObjectMapper mapper = new ObjectMapper();
+////        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+////        try {
+////            AGOTBooks = mapper.readValue(new URL(url),AGOTBookLibrary.class);
+////        } catch (Exception ex) {
+////            System.out.println(ex.getMessage());
+////        }
+//        List<ClientHttpRequestInterceptor> list = new ArrayList<ClientHttpRequestInterceptor>();
+//        list.add(interceptor);
+//        restTemplate.setInterceptors(list);
+//
+//        book = restTemplate.getForObject("http://anapioficeandfire.com/api/books/1", AGOTBook.class);
+//            //String books = restTemplate.getForObject("http://anapioficeandfire.com/api/books/", String.class);
+//            //System.out.println(books);
+//
+////            URL url = new URL("http://anapioficeandfire.com/api/books/");
+////            InputStream inputStream = url.openConnection().getInputStream();
+////            ObjectMapper mapper = new ObjectMapper();
+////            AGOTBooks = mapper.readValue(inputStream, AGOTBookLibrary.class);
+//        } 
+//        catch (Exception ex) {
+//           System.out.println(ex.getMessage());
+//        }
+
+        List<ClientHttpRequestInterceptor> list = new ArrayList<ClientHttpRequestInterceptor>();
+        list.add(interceptor);
+        restTemplate.setInterceptors(list);
+        this.AGOTBooks = new AGOTBookLibrary();
+        
+        AGOTBook book1 = restTemplate.getForObject("http://anapioficeandfire.com/api/books/1", AGOTBook.class);
+        AGOTBook book2 = restTemplate.getForObject("http://anapioficeandfire.com/api/books/2", AGOTBook.class);
+        AGOTBook book3 = restTemplate.getForObject("http://anapioficeandfire.com/api/books/3", AGOTBook.class);
+        AGOTBook book4 = restTemplate.getForObject("http://anapioficeandfire.com/api/books/4", AGOTBook.class);
+        AGOTBook book5 = restTemplate.getForObject("http://anapioficeandfire.com/api/books/5", AGOTBook.class);
+        AGOTBook book6 = restTemplate.getForObject("http://anapioficeandfire.com/api/books/6", AGOTBook.class);
+        AGOTBook book7 = restTemplate.getForObject("http://anapioficeandfire.com/api/books/7", AGOTBook.class);
+        AGOTBook book8 = restTemplate.getForObject("http://anapioficeandfire.com/api/books/8", AGOTBook.class);
+        AGOTBook book9 = restTemplate.getForObject("http://anapioficeandfire.com/api/books/9", AGOTBook.class);
+        AGOTBook book10 = restTemplate.getForObject("http://anapioficeandfire.com/api/books/10", AGOTBook.class);
+        
+        AGOTBooks.getBooks().add(book1);
+        AGOTBooks.getBooks().add(book2);
+        AGOTBooks.getBooks().add(book3);
+        AGOTBooks.getBooks().add(book4);
+        AGOTBooks.getBooks().add(book5);
+        AGOTBooks.getBooks().add(book6);
+        AGOTBooks.getBooks().add(book7);
+        AGOTBooks.getBooks().add(book8);
+        AGOTBooks.getBooks().add(book9);
+        AGOTBooks.getBooks().add(book10);
     }
 
 }

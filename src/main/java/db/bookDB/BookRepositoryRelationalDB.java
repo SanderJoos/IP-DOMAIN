@@ -118,8 +118,9 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
     }
 
     public void deleteBook(String title) {
-        Book book = this.getBook(title);
         try{
+            TypedQuery<Book> query = manager.createQuery("select b from Book b where b.title = :title", Book.class);
+            Book book = query.setParameter("title",title).getSingleResult();
             this.openConnection();
             manager.getTransaction().begin();
             manager.remove(book);

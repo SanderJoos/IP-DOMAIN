@@ -159,9 +159,10 @@ public class AuthorRepositoryRelationalDB extends DatabaseConnection implements 
 
     public void updateAuthor(Author author) {
         try{
+            //merge methode
             this.openConnection();
             manager.getTransaction().begin();
-            Author a = this.getAuthorById(author.getId());
+            Author a = this.manager.find(Author.class, author.getId());
             a.setId(author.getId());
             a.setLastName(author.getLastName());
             a.setName(author.getName());
@@ -192,7 +193,7 @@ public class AuthorRepositoryRelationalDB extends DatabaseConnection implements 
     public void deleteAuthor(long id) {
         try{
             this.openConnection();
-            Author author = this.getAuthorById(id);
+            Author author = this.manager.find(Author.class, id);
             manager.getTransaction().begin();
             manager.remove(author);
             manager.getTransaction().commit();

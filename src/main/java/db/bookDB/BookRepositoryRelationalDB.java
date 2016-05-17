@@ -174,7 +174,7 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
         try{
             this.openConnection();
             manager.getTransaction().begin();
-            Book b = this.getBookById(book.getId());
+            Book b = this.manager.find(Book.class, book.getId());
             b.setId(book.getId());
             b.setISBN(book.getISBN());
             b.setScore(book.getScore());
@@ -208,7 +208,7 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
     public void deleteBook(long id) {
         try{
             this.openConnection();
-            Book b = this.getBookById(id);
+            Book b = this.manager.find(Book.class, id);
             this.deleteBook(b);
         }
         catch(Exception e){

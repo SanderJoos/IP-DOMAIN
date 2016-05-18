@@ -211,7 +211,9 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
         try{
             this.openConnection();
             Book b = this.manager.find(Book.class, id);
+            manager.getTransaction().begin();
             manager.remove(b);
+            manager.getTransaction().commit();
         }
         catch(Exception e){
            manager.getTransaction().rollback();

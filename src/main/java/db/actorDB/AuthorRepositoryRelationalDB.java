@@ -162,10 +162,7 @@ public class AuthorRepositoryRelationalDB extends DatabaseConnection implements 
             //merge methode
             this.openConnection();
             manager.getTransaction().begin();
-            Author a = this.manager.find(Author.class, author.getId());
-            a.setId(author.getId());
-            a.setLastName(author.getLastName());
-            a.setName(author.getName());
+            manager.merge(author);
             manager.flush();
             manager.getTransaction().commit();
         }

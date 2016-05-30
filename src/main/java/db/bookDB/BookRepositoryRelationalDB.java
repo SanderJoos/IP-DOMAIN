@@ -176,11 +176,7 @@ public class BookRepositoryRelationalDB extends DatabaseConnection implements IB
         try{
             this.openConnection();
             manager.getTransaction().begin();
-            Book b = this.manager.find(Book.class, book.getId());
-            b.setId(book.getId());
-            b.setISBN(book.getISBN());
-            b.setScore(book.getScore());
-            b.setTitle(book.getTitle());
+            manager.merge(book);
             manager.flush();
             manager.getTransaction().commit();
         }
